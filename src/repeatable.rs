@@ -10,7 +10,7 @@ pub struct Runner {
 impl Runner {
     /// Defines the variables that don't depend on the specific slice being computed over
     pub async fn new(shader: &str, entry_point: &str) -> Self {
-        let (device, queue) = wgpu::Instance::new(wgpu::Backends::PRIMARY)
+        let (device, queue) = wgpu::Instance::default()
             .request_adapter(&Default::default())
             .await
             .unwrap()
@@ -101,8 +101,7 @@ impl Runner {
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
                 label: None,
                 contents: input_bytes,
-                usage: wgpu::BufferUsages::STORAGE
-                    | wgpu::BufferUsages::COPY_SRC,
+                usage: wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC,
             });
         let output_buffer = self.device.create_buffer(&wgpu::BufferDescriptor {
             label: None,
